@@ -1,0 +1,14 @@
+{
+  "bootstrap": <%= @bootstrap %>,
+  "server": true,
+  "datacenter": "core",
+  "data_dir": "/var/consul",
+  "encrypt": "<%= @encrypt_string %>",
+  "log_level": "INFO",
+<% if @bootstrap -%>
+  "enable_syslog": true
+<% else -%>
+  "enable_syslog": true,
+  "start_join": [<% @start_join.each do |j| -%><% if j == @start_join.last -%>"<%= j %>"<% else -%>"<%= j %>", <% end -%><% end -%>]
+<% end -%>
+}
