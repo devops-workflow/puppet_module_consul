@@ -79,6 +79,7 @@ class consul (
   unless ( $server ) {
     file { "${configuration_root}/checks/webserver":
       source  => "puppet:///modules/${module_name}/client/webserver",
+      mode    => '0755',
       require => File["${configuration_root}/checks"],
     }
   }

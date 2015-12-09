@@ -79,6 +79,7 @@ class consul::server (
   file { "${configuration_root}/checks/reading":
     source  => "puppet:///modules/${module_name}/server/reading",
     require => File["${configuration_root}/checks"],
+    mode    => '0755',
   }
 
 
