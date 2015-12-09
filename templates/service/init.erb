@@ -23,7 +23,7 @@
 # Check that networking is up.
 [ "$NETWORKING" = "no" ] && exit 0
 
-exec="/usr/bin/consul"
+exec="su - consul /usr/bin/consul"
 prog=${exec##*/}
 
 lockfile="/var/lock/subsys/$prog"

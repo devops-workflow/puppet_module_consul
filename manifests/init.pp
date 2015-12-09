@@ -1,8 +1,8 @@
 class consul (
   $bootstrap          = false,
   $configuration_root = '/etc/consul.d',
-  $download_file      = '0.5.2_linux_amd64.zip',
-  $download_source    = 'https://dl.bintray.com/mitchellh/consul',
+  $download_file      = 'consul_0.6.0_linux_amd64.zip',
+  $download_source    = 'https://releases.hashicorp.com/consul/0.6.0',
   $encrypt_string     = 'CHANGE_ME',
   $server             = false,
   $start_join         = [""],
@@ -56,6 +56,7 @@ class consul (
   }
   file { "${configuration_root}/checks":
     ensure  => directory,
+    mode    => '0755',
   }
 
   file { "${configuration_root}/client/client.json":

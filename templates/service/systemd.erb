@@ -3,6 +3,7 @@ Description=Consul Daemon
 After=syslog.target
 
 [Service]
+User=consul
 PIDFile=/var/run/consul.pid
 ExecStart=/usr/bin/consul agent -config-dir <%= @configuration_root %>/<% if @server -%>server<% else -%>client<% end -%>
 

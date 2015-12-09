@@ -3,6 +3,9 @@ description "Consul agent"
 start on runlevel [345]
 stop on runlevel [!345]
 
+setuid consul
+setgid consul
+
 respawn
 
 script
