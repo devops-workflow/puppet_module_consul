@@ -1,0 +1,11 @@
+Description=Testing WebServer for Consul Health Checks
+After=syslog.target
+
+[Service]
+User=consul
+PIDFile=/var/run/webserver.pid
+ExecStart=<%= @configuration_root %>/checks/webserver
+
+[Install]
+WantedBy=multi-user.target
+

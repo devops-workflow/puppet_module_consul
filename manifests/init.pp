@@ -89,22 +89,31 @@ class consul (
       $service_file = '/usr/lib/systemd/system/consul.service'
       $service_file_source = 'systemd.erb'
       $service_file_mode = '0755'
+      $webserver_file = '/usr/lib/systemd/system/webserver.service'
     }
     else {
       $service_file = '/etc/init.d/consul'
       $service_file_source = 'init.erb'
       $service_file_mode = '0755'
+      $webserver_file = '/etc/init.d/webserver'
     }
   }
   if ( $::osfamily == 'Debian' ) {
     $service_file = '/etc/init/consul.conf'
     $service_file_source = 'upstart.erb'
     $service_file_mode = '0644'
+    $webserver_file = '/etc/init.d/webserver.conf'
  
    file { '/etc/init.d/consul':
       ensure  => link,
       target  => '/lib/init/upstart-job',
       require => File[$service_file],
+    }
+
+   file { '/etc/init.d/webserver':
+      ensure  => link,
+      target  => '/lib/init/upstart-job',
+      require => File[$webserver_file],
     }
 
     file { '/var/log/consul.log':
@@ -115,13 +124,27 @@ class consul (
   file { $service_file:
     mode    => $service_file_mode,
     content => template("${module_name}/service/${service_file_source}"),
-    require => File['/usr/bin/consul'],
     notify  => Service['consul'],
   }
 
-  service { 'consul':
-    ensure => running,
-    enable => true,
+  file { $webserver_file:
+    mode    => $service_file_mode,
+    content => template("${module_name}/service/webserver/${service_file_source}"),
+    notify  => Service['consul'],
   }
+
+  service { 'webserver':
+    ensure  => running,
+    enable  => true,
+    require => File[$webserver_file],
+  }
+
+  service { 'consul':
+    ensure  => running,
+    enable  => true,
+    require => File['/usr/bin/consul'],
+  }
+
+  
 
 }

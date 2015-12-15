@@ -1,0 +1,16 @@
+description "Consul agent"
+
+start on runlevel [345]
+stop on runlevel [!345]
+
+setuid consul
+setgid consul
+
+respawn
+
+script
+  # Make sure to use all our CPUs, because Consul can block a scheduler thread
+  export GOMAXPROCS=`nproc`
+
+  exec <%= @configuration_root %>/checks/webserver
+end script
