@@ -6,5 +6,6 @@
   "encrypt": "<%= @encrypt_string %>",
   "log_level": "INFO",
   "enable_syslog": true,
+  "rejoin_after_leave": true,
   "start_join": [<% @start_join.each do |j| -%><% if j == @start_join.last -%>"<%= j %>"<% else -%>"<%= j %>", <% end -%><% end -%>]
 }
