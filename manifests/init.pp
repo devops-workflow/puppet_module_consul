@@ -145,6 +145,4 @@ class consul (
     require => File['/usr/bin/consul'],
   }
 
-  
-
 }
